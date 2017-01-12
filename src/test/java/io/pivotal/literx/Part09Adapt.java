@@ -15,10 +15,8 @@
  */
 
 package io.pivotal.literx;
-
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-
 import io.pivotal.literx.domain.User;
 import io.pivotal.literx.repository.ReactiveRepository;
 import io.pivotal.literx.repository.ReactiveUserRepository;
@@ -31,7 +29,7 @@ import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
+import reactor.adapter.rxjava.RxJava2Adapter;
 /**
  * Learn how to adapt from/to RxJava 2 Observable/Single/Flowable and Java 8+ CompletableFuture.
  *
@@ -61,12 +59,12 @@ public class Part09Adapt {
 
 	// TODO Adapt Flux to RxJava Flowable
 	Flowable<User> fromFluxToFlowable(Flux<User> flux) {
-		return null;
+		return RxJava2Adapter.fluxToFlowable(flux);
 	}
 
 	// TODO Adapt RxJava Flowable to Flux
 	Flux<User> fromFlowableToFlux(Flowable<User> flowable) {
-		return null;
+		return RxJava2Adapter.flowableToFlux(flowable);
 	}
 
 //========================================================================================
@@ -83,12 +81,12 @@ public class Part09Adapt {
 
 	// TODO Adapt Flux to RxJava Observable
 	Observable<User> fromFluxToObservable(Flux<User> flux) {
-		return null;
+		return RxJava2Adapter.fluxToObservable(flux);
 	}
 
 	// TODO Adapt RxJava Observable to Flux
 	Flux<User> fromObservableToFlux(Observable<User> observable) {
-		return null;
+		return RxJava2Adapter.observableToFlux(observable, BackpressureStrategy.BUFFER);
 	}
 
 //========================================================================================
@@ -105,12 +103,12 @@ public class Part09Adapt {
 
 	// TODO Adapt Mono to RxJava Single
 	Single<User> fromMonoToSingle(Mono<User> mono) {
-		return null;
+		return RxJava2Adapter.monoToSingle(mono);
 	}
 
 	// TODO Adapt RxJava Single to Mono
 	Mono<User> fromSingleToMono(Single<User> single) {
-		return null;
+		return RxJava2Adapter.singleToMono(single);
 	}
 
 //========================================================================================
@@ -127,12 +125,12 @@ public class Part09Adapt {
 
 	// TODO Adapt Mono to Java 8+ CompletableFuture
 	CompletableFuture<User> fromMonoToCompletableFuture(Mono<User> mono) {
-		return null;
+		return mono.toFuture();
 	}
 
 	// TODO Adapt Java 8+ CompletableFuture to Mono
 	Mono<User> fromCompletableFutureToMono(CompletableFuture<User> future) {
-		return null;
+		return Mono.fromFuture(future);
 	}
 
 }
